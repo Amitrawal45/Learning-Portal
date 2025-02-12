@@ -1,17 +1,26 @@
-import { createContext } from "react";
+import { createContext, useEffect, useState } from "react";
 import React from "react";
-export const AppContext = createContext()
+import { dummyCourses } from "../assets/assets";
+export const AppContext = createContext();
 
-export const AppContextProvider = (props)=>{
+export const AppContextProvider = (props) => {
+  const currency = import.meta.env.VITE_CURRENCY;
+  const [allcourses, setAllCourses] = useState([]);
 
-    const value = {
+  // Fetch all Courses
 
-    }
-    return (
-        <AppContext.Provider value={value}>
-            {props.children}
-        </AppContext.Provider>
+  const fetchALlCourses = async () => {
+    setAllCourses(dummyCourses);
+  };
+  useEffect(() => {
+    fetchALlCourses();
+  }, []);
 
-    )
-
-}
+  const value = {
+    currency,
+    allcourses,
+  };
+  return (
+    <AppContext.Provider value={value}>{props.children}</AppContext.Provider>
+  );
+};
